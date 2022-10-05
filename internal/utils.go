@@ -2,7 +2,6 @@ package internal
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 )
 
@@ -12,6 +11,6 @@ func UnmarshalResponse(response []byte, v interface{}) error {
 		log.Println("Failed to marshal response")
 		return err
 	}
-	
+
 	return nil
 }
