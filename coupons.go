@@ -60,7 +60,7 @@ func (s *Session) CreateCoupon(createObject *CreateCouponObject) (*CouponData, e
 
 func (s *Session) DeleteCoupon(couponId string) error {
 	endpoint := fmt.Sprintf("%s/%s", CouponsEndpoint, couponId)
-	resp, err := internal.DeleteRequest(endpoint)
+	_, err := internal.DeleteRequest(s.Secret, endpoint, nil)
 	if err != nil {
 		return err
 	}
