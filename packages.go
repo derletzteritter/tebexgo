@@ -8,9 +8,8 @@ import (
 	"github.com/itschip/tebexgo/internal"
 )
 
-func (s *Session) GetAllPackages() (*[]Package, error) {
+func (s *Session) GetAllPackages() ([]Package, error) {
 	resp, err := internal.GetRequest(s.Secret, AllPackagesEndpoint)
-
 	if err != nil {
 		log.Printf("Failed to fetch packages, Error: %v", err.Error())
 		return nil, err
@@ -22,24 +21,23 @@ func (s *Session) GetAllPackages() (*[]Package, error) {
 		return nil, err
 	}
 
-	return &packages, nil
+	return packages, nil
 }
 
-func (s *Session) GetPackage(packageId string) (*Package, error) {
+func (s *Session) GetPackage(packageId string) (Package, error) {
 	resp, err := internal.GetRequest(s.Secret, RetrievePackageEndpoint+packageId)
-
 	if err != nil {
 		log.Printf("Failed to fetch package, Error: %v", err.Error())
-		return nil, err
+		return Package{}, err
 	}
 
 	var pkg Package
 
 	if err := internal.UnmarshalResponse(resp, &pkg); err != nil {
-		return nil, err
+		return Package{}, err
 	}
 
-	return &pkg, nil
+	return pkg, nil
 }
 
 func (s *Session) UpdatePackage(packageId string, updateObject *UpdatePackageObject) error {
